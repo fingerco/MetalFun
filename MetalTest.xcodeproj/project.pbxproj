@@ -18,24 +18,15 @@
 		9EF1B2CC243AA426006EB16A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1B2CB243AA426006EB16A /* AppDelegate.swift */; };
 		9EF1B2CE243AA426006EB16A /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1B2CD243AA426006EB16A /* GameViewController.swift */; };
 		9EF1B2D1243AA427006EB16A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9EF1B2CF243AA427006EB16A /* Main.storyboard */; };
-		9EF1B2D3243AA427006EB16A /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1B29E243AA421006EB16A /* Shaders.metal */; };
-		9EF1B2D4243AA427006EB16A /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1B29E243AA421006EB16A /* Shaders.metal */; };
-		9EF1B2D5243AA427006EB16A /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1B29E243AA421006EB16A /* Shaders.metal */; };
-		9EF1B2D6243AA427006EB16A /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1B29F243AA421006EB16A /* Renderer.swift */; };
-		9EF1B2D7243AA427006EB16A /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1B29F243AA421006EB16A /* Renderer.swift */; };
-		9EF1B2D8243AA427006EB16A /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1B29F243AA421006EB16A /* Renderer.swift */; };
-		9EF1B2D9243AA427006EB16A /* ShaderTypes.h in Resources */ = {isa = PBXBuildFile; fileRef = 9EF1B2A0243AA421006EB16A /* ShaderTypes.h */; };
-		9EF1B2DA243AA427006EB16A /* ShaderTypes.h in Resources */ = {isa = PBXBuildFile; fileRef = 9EF1B2A0243AA421006EB16A /* ShaderTypes.h */; };
-		9EF1B2DB243AA427006EB16A /* ShaderTypes.h in Resources */ = {isa = PBXBuildFile; fileRef = 9EF1B2A0243AA421006EB16A /* ShaderTypes.h */; };
 		9EF1B2DC243AA427006EB16A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EF1B2A1243AA426006EB16A /* Assets.xcassets */; };
 		9EF1B2DD243AA427006EB16A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EF1B2A1243AA426006EB16A /* Assets.xcassets */; };
 		9EF1B2DE243AA427006EB16A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EF1B2A1243AA426006EB16A /* Assets.xcassets */; };
+		9EF1B2EB243AABB3006EB16A /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1B2EA243AABB3006EB16A /* Shaders.metal */; };
+		9EF1B2EC243AABB3006EB16A /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1B2EA243AABB3006EB16A /* Shaders.metal */; };
+		9EF1B2ED243AABB3006EB16A /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1B2EA243AABB3006EB16A /* Shaders.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9EF1B29E243AA421006EB16A /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
-		9EF1B29F243AA421006EB16A /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
-		9EF1B2A0243AA421006EB16A /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
 		9EF1B2A1243AA426006EB16A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9EF1B2A6243AA426006EB16A /* MetalTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EF1B2A9243AA426006EB16A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -54,6 +45,7 @@
 		9EF1B2CD243AA426006EB16A /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		9EF1B2D0243AA427006EB16A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9EF1B2D2243AA427006EB16A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9EF1B2EA243AABB3006EB16A /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,10 +87,8 @@
 		9EF1B29D243AA421006EB16A /* MetalTest Shared */ = {
 			isa = PBXGroup;
 			children = (
-				9EF1B29E243AA421006EB16A /* Shaders.metal */,
-				9EF1B29F243AA421006EB16A /* Renderer.swift */,
-				9EF1B2A0243AA421006EB16A /* ShaderTypes.h */,
 				9EF1B2A1243AA426006EB16A /* Assets.xcassets */,
+				9EF1B2EA243AABB3006EB16A /* Shaders.metal */,
 			);
 			path = "MetalTest Shared";
 			sourceTree = "<group>";
@@ -248,7 +238,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9EF1B2D9243AA427006EB16A /* ShaderTypes.h in Resources */,
 				9EF1B2AF243AA426006EB16A /* Main.storyboard in Resources */,
 				9EF1B2DC243AA427006EB16A /* Assets.xcassets in Resources */,
 				9EF1B2B2243AA426006EB16A /* LaunchScreen.storyboard in Resources */,
@@ -259,7 +248,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9EF1B2DA243AA427006EB16A /* ShaderTypes.h in Resources */,
 				9EF1B2C0243AA426006EB16A /* Main.storyboard in Resources */,
 				9EF1B2DD243AA427006EB16A /* Assets.xcassets in Resources */,
 				9EF1B2C3243AA426006EB16A /* LaunchScreen.storyboard in Resources */,
@@ -272,7 +260,6 @@
 			files = (
 				9EF1B2D1243AA427006EB16A /* Main.storyboard in Resources */,
 				9EF1B2DE243AA427006EB16A /* Assets.xcassets in Resources */,
-				9EF1B2DB243AA427006EB16A /* ShaderTypes.h in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,8 +270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9EF1B2D6243AA427006EB16A /* Renderer.swift in Sources */,
-				9EF1B2D3243AA427006EB16A /* Shaders.metal in Sources */,
+				9EF1B2EB243AABB3006EB16A /* Shaders.metal in Sources */,
 				9EF1B2AC243AA426006EB16A /* GameViewController.swift in Sources */,
 				9EF1B2AA243AA426006EB16A /* AppDelegate.swift in Sources */,
 			);
@@ -294,8 +280,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9EF1B2D7243AA427006EB16A /* Renderer.swift in Sources */,
-				9EF1B2D4243AA427006EB16A /* Shaders.metal in Sources */,
+				9EF1B2EC243AABB3006EB16A /* Shaders.metal in Sources */,
 				9EF1B2BD243AA426006EB16A /* GameViewController.swift in Sources */,
 				9EF1B2BB243AA426006EB16A /* AppDelegate.swift in Sources */,
 			);
@@ -305,8 +290,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9EF1B2D8243AA427006EB16A /* Renderer.swift in Sources */,
-				9EF1B2D5243AA427006EB16A /* Shaders.metal in Sources */,
+				9EF1B2ED243AABB3006EB16A /* Shaders.metal in Sources */,
 				9EF1B2CE243AA426006EB16A /* GameViewController.swift in Sources */,
 				9EF1B2CC243AA426006EB16A /* AppDelegate.swift in Sources */,
 			);
@@ -570,7 +554,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = graydaystudios.MetalTest;
 				PRODUCT_NAME = MetalTest;
 				SDKROOT = macosx;
-				SWIFT_OBJC_BRIDGING_HEADER = "MetalTest Shared/ShaderTypes.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -592,7 +576,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = graydaystudios.MetalTest;
 				PRODUCT_NAME = MetalTest;
 				SDKROOT = macosx;
-				SWIFT_OBJC_BRIDGING_HEADER = "MetalTest Shared/ShaderTypes.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
