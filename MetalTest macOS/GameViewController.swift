@@ -41,9 +41,12 @@ class GameViewController: NSViewController {
         mtkView.layer!.addSublayer(metalLayer)
         
         let vertexData: [Float] = [
-            0.0, 1.0, 0.0,
-            -1.0, -1.0, 0.0,
-            1.0, -1.0, 0.0
+            0.5, 0.5, 0.0,
+            -0.5, 0.5, 0.0,
+            0.5, 0.0, 0.0,
+            -0.5, 0.0, 0.0,
+            -0.5, 0.5, 0.0,
+            0.5, 0.0, 0.0,
         ]
         
         let dataSize = vertexData.count * MemoryLayout.size(ofValue: vertexData[0])
@@ -104,7 +107,7 @@ class GameViewController: NSViewController {
         renderEncoder.drawPrimitives(
             type: .triangle,
             vertexStart: 0,
-            vertexCount: 3, instanceCount: 1
+            vertexCount: 6
         )
         renderEncoder.endEncoding()
         
