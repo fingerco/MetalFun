@@ -21,12 +21,14 @@ struct VertexOut{
 
 vertex VertexOut basic_vertex(
     const device VertexIn* vertex_array [[ buffer(0) ]],
+    const device float4x4 &rotateX [[ buffer(1) ]],
+    const device float4x4 &rotateY [[ buffer(2) ]],
     unsigned int vid [[ vertex_id ]]
 ) {
     VertexIn VertexIn = vertex_array[vid];
 
     VertexOut VertexOut;
-    VertexOut.position = float4(VertexIn.position, 1.0);
+    VertexOut.position = rotateY * (rotateX * float4(VertexIn.position, 1.0));
     VertexOut.color = VertexIn.color;
 
     return VertexOut;

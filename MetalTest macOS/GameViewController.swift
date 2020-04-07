@@ -19,11 +19,8 @@ class GameViewController: NSViewController {
     var pipelineState: MTLRenderPipelineState!
     var commandQueue: MTLCommandQueue!
     var timer: Timer!
-    var vertexRotationIndex = 0
-    var vertexRotationTime: Float = 0
-
     
-    let box = Box(pos: Position(x: 0.0, y: 0.0, z: 0.5), width: 0.2, height: 0.2, depth: 0.2)
+    let box = Box(pos: Position(x: 0.0, y: 0.0, z: 0.0), width: 0.5, height: 0.5, depth: 0.5)
     
     var triangles: [Triangle]!
 
@@ -61,6 +58,9 @@ class GameViewController: NSViewController {
             repeats: true
         )
         
+        let dataSize = box.floatBuffer.count * MemoryLayout.size(ofValue: box.floatBuffer[0])
+        vertexBuffer = device.makeBuffer(bytes: box.floatBuffer, length: dataSize, options: [])
+        
 
         RunLoop.current.add(timer, forMode:RunLoop.Mode.default)
         RunLoop.current.add(timer, forMode:RunLoop.Mode.eventTracking)
@@ -97,56 +97,13 @@ class GameViewController: NSViewController {
             alpha: 1.0
         )
         
-        let increment: Float = 0.02
-        vertexRotationTime += increment
-        
-        let vertexRotations: [simd_quatf] = [
-            simd_quatf(angle: 0,
-                       axis: simd_normalize(simd_float3(x: 0, y: 0, z: 1))),
-            simd_quatf(angle: 0,
-                       axis: simd_normalize(simd_float3(x: 0, y: 0, z: 1))),
-            simd_quatf(angle: .pi * 0.05,
-                       axis: simd_normalize(simd_float3(x: 0, y: 1, z: 0))),
-            simd_quatf(angle: .pi * 0.1,
-                       axis: simd_normalize(simd_float3(x: 1, y: 0, z: -1))),
-            simd_quatf(angle: .pi * 0.15,
-                       axis: simd_normalize(simd_float3(x: 0, y: 1, z: 0))),
-            simd_quatf(angle: .pi * 0.2,
-                       axis: simd_normalize(simd_float3(x: -1, y: 0, z: 1))),
-            simd_quatf(angle: .pi * 0.15,
-                       axis: simd_normalize(simd_float3(x: 0, y: -1, z: 0))),
-            simd_quatf(angle: .pi * 0.1,
-                       axis: simd_normalize(simd_float3(x: 1, y: 0, z: -1))),
-            simd_quatf(angle: .pi * 0.05,
-                       axis: simd_normalize(simd_float3(x: 0, y: 1, z: 0))),
-            simd_quatf(angle: 0,
-                       axis: simd_normalize(simd_float3(x: 0, y: 0, z: 1))),
-            simd_quatf(angle: 0,
-                       axis: simd_normalize(simd_float3(x: 0, y: 0, z: 1)))
-        ]
-        
-        let q = simd_slerp(vertexRotations[vertexRotationIndex],
-        vertexRotations[vertexRotationIndex + 1],
-        vertexRotationTime)
-        
-        if vertexRotationTime >= 1 {
-            vertexRotationIndex += 1
-            vertexRotationTime = 0
-        }
-        
-        if vertexRotationIndex >= vertexRotations.count - 1 {
-            vertexRotationIndex = 0
-        }
-        
-        let rotatedBox = Box.rotated(boxes: [box], q: q)[0]
-        let dataSize = rotatedBox.floatBuffer.count * MemoryLayout.size(ofValue: rotatedBox.floatBuffer[0])
-        vertexBuffer = device.makeBuffer(bytes: rotatedBox.floatBuffer, length: dataSize, options: [])
-        
         
         let cmdBuffer = commandQueue.makeCommandBuffer()!
         let renderEncoder = cmdBuffer.makeRenderCommandEncoder(descriptor: renderPassDesc)!
         renderEncoder.setRenderPipelineState(pipelineState)
         renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+        renderEncoder.setVertexBuffer(rotMatrixY(dvc: device, deg: Float(NSEvent.mouseLocation.x)), offset: 0, index: 1)
+        renderEncoder.setVertexBuffer(rotMatrixX(dvc: device, deg: Float(NSEvent.mouseLocation.y)), offset: 0, index: 2)
         renderEncoder.drawPrimitives(
             type: .triangle,
             vertexStart: 0,
@@ -157,7 +114,47 @@ class GameViewController: NSViewController {
         
         cmdBuffer.present(drawable)
         cmdBuffer.commit()
+    }
+    
+    func rotMatrixX(dvc: MTLDevice, deg: Float) -> MTLBuffer! {
+        let rads = deg * Float.pi / 180.0
         
+        let matrix: [Float] = [
+            1, 0, 0, 0,
+            0, cos(rads), -sin(rads), 0,
+            0, sin(rads), cos(rads), 0,
+            0, 0, 0, 1
+        ]
         
+        let dataSize = matrix.count * MemoryLayout.size(ofValue: matrix[0])
+        return dvc.makeBuffer(bytes: matrix, length: dataSize, options: [])
+    }
+    
+    func rotMatrixY(dvc: MTLDevice, deg: Float) -> MTLBuffer! {
+        let rads = deg * Float.pi / 180.0
+        
+        let matrix: [Float] = [
+            cos(rads), 0,  -sin(rads), 0,
+            0, 1, 0, 0,
+            sin(rads), 0, cos(rads), 0,
+            0, 0, 0, 1
+        ]
+        
+        let dataSize = matrix.count * MemoryLayout.size(ofValue: matrix[0])
+        return dvc.makeBuffer(bytes: matrix, length: dataSize, options: [])
+    }
+    
+    func rotMatrixZ(dvc: MTLDevice, deg: Float) -> MTLBuffer! {
+        let rads = deg * Float.pi / 180.0
+        
+        let matrix: [Float] = [
+            cos(rads), -sin(rads), 0, 0,
+            sin(rads), cos(rads), 0, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1
+        ]
+        
+        let dataSize = matrix.count * MemoryLayout.size(ofValue: matrix[0])
+        return dvc.makeBuffer(bytes: matrix, length: dataSize, options: [])
     }
 }
