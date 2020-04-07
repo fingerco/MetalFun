@@ -9,6 +9,17 @@
 import Cocoa
 import MetalKit
 
+struct Uniforms {
+    let rotateX: [Float]
+    let rotateY: [Float]
+    let rotateZ: [Float]
+    let proj: [Float]
+    
+    var floatBuffer: [Float] {
+        return rotateX + rotateY + rotateZ + proj
+    }
+}
+
 // Our macOS specific view controller
 class GameViewController: NSViewController {
     
@@ -97,13 +108,19 @@ class GameViewController: NSViewController {
             alpha: 1.0
         )
         
+        let rotX = rotMatrixX(deg: Float(NSEvent.mouseLocation.y))
+        let rotY = rotMatrixY(deg: Float(NSEvent.mouseLocation.x))
+        let rotZ = rotMatrixZ(deg: 0.0)
+        let uniforms = Uniforms(rotateX: rotX, rotateY: rotY, rotateZ: rotZ, proj: projMatrix(aspect: Float(self.view.bounds.size.width / self.view.bounds.size.height), fov: 85, near: 0.01, far: 100.0))
+        let dataSize = uniforms.floatBuffer.count * MemoryLayout.size(ofValue: uniforms.floatBuffer[0])
+        let uniformsBuffer = device.makeBuffer(bytes: uniforms.floatBuffer, length: dataSize, options: [])
+        
         
         let cmdBuffer = commandQueue.makeCommandBuffer()!
         let renderEncoder = cmdBuffer.makeRenderCommandEncoder(descriptor: renderPassDesc)!
         renderEncoder.setRenderPipelineState(pipelineState)
         renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
-        renderEncoder.setVertexBuffer(rotMatrixY(dvc: device, deg: Float(NSEvent.mouseLocation.x)), offset: 0, index: 1)
-        renderEncoder.setVertexBuffer(rotMatrixX(dvc: device, deg: Float(NSEvent.mouseLocation.y)), offset: 0, index: 2)
+        renderEncoder.setVertexBuffer(uniformsBuffer, offset: 0, index: 1)
         renderEncoder.drawPrimitives(
             type: .triangle,
             vertexStart: 0,
@@ -116,45 +133,48 @@ class GameViewController: NSViewController {
         cmdBuffer.commit()
     }
     
-    func rotMatrixX(dvc: MTLDevice, deg: Float) -> MTLBuffer! {
+    func rotMatrixX(deg: Float) -> [Float] {
         let rads = deg * Float.pi / 180.0
         
-        let matrix: [Float] = [
+        return [
             1, 0, 0, 0,
             0, cos(rads), -sin(rads), 0,
             0, sin(rads), cos(rads), 0,
             0, 0, 0, 1
         ]
-        
-        let dataSize = matrix.count * MemoryLayout.size(ofValue: matrix[0])
-        return dvc.makeBuffer(bytes: matrix, length: dataSize, options: [])
     }
     
-    func rotMatrixY(dvc: MTLDevice, deg: Float) -> MTLBuffer! {
+    func rotMatrixY(deg: Float) -> [Float] {
         let rads = deg * Float.pi / 180.0
         
-        let matrix: [Float] = [
+        return [
             cos(rads), 0,  -sin(rads), 0,
             0, 1, 0, 0,
             sin(rads), 0, cos(rads), 0,
             0, 0, 0, 1
         ]
-        
-        let dataSize = matrix.count * MemoryLayout.size(ofValue: matrix[0])
-        return dvc.makeBuffer(bytes: matrix, length: dataSize, options: [])
     }
     
-    func rotMatrixZ(dvc: MTLDevice, deg: Float) -> MTLBuffer! {
+    func rotMatrixZ(deg: Float) -> [Float] {
         let rads = deg * Float.pi / 180.0
         
-        let matrix: [Float] = [
+        return [
             cos(rads), -sin(rads), 0, 0,
             sin(rads), cos(rads), 0, 0,
             0, 0, 1, 0,
             0, 0, 0, 1
         ]
+    }
+    
+    func projMatrix(aspect: Float, fov: Float, near: Float, far: Float) -> [Float] {
+        let fovRads = fov * (Float.pi/180)
+        let s = 1.0 / aspect * tan( (fovRads / 2.0) )
         
-        let dataSize = matrix.count * MemoryLayout.size(ofValue: matrix[0])
-        return dvc.makeBuffer(bytes: matrix, length: dataSize, options: [])
+        return [
+            s, 0, 0, 0,
+            0, s, 0, 0,
+            0, 0, -( (far + near) / (far - near) ), -1,
+            0, 0, -( (2 * far * near) / (far - near) ), 0
+        ]
     }
 }

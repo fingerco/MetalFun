@@ -14,6 +14,13 @@ struct VertexIn{
   packed_float4 color;
 };
 
+struct Uniforms{
+    float4x4 rotateX;
+    float4x4 rotateY;
+    float4x4 rotateZ;
+    float4x4 proj;
+};
+
 struct VertexOut{
   float4 position [[position]];  //1
   float4 color;
@@ -21,14 +28,17 @@ struct VertexOut{
 
 vertex VertexOut basic_vertex(
     const device VertexIn* vertex_array [[ buffer(0) ]],
-    const device float4x4 &rotateX [[ buffer(1) ]],
-    const device float4x4 &rotateY [[ buffer(2) ]],
+    const device Uniforms& uniforms [[ buffer(1) ]],
     unsigned int vid [[ vertex_id ]]
 ) {
     VertexIn VertexIn = vertex_array[vid];
 
     VertexOut VertexOut;
-    VertexOut.position = rotateY * (rotateX * float4(VertexIn.position, 1.0));
+    
+    float4 coords = float4(VertexIn.position, 1.0);
+    coords = uniforms.proj * uniforms.rotateX * uniforms.rotateY * uniforms.rotateZ * coords;
+    
+    VertexOut.position = coords;
     VertexOut.color = VertexIn.color;
 
     return VertexOut;
