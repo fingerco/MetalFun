@@ -10,13 +10,13 @@ import Foundation
 
 struct Position {
     let x, y, z: Float
-    let floatBuffer: [Float]
+    var floatBuffer: [Float] {
+        return [self.x, self.y, self.z]
+    }
     
     init(x: Float, y: Float, z: Float) {
         self.x = x
         self.y = y
         self.z = z
-        
-        self.floatBuffer = [x, y, z]
     }
 }

@@ -12,13 +12,8 @@ import simd
 struct Vertex {
     let pos: Position
     let color: VertexColor
-    let floatBuffer: [Float]
-    
-    init(pos: Position, color: VertexColor) {
-        self.pos = pos
-        self.color = color
-        
-        self.floatBuffer = pos.floatBuffer + color.floatBuffer
+    var floatBuffer: [Float] {
+        return pos.floatBuffer + color.floatBuffer
     }
     
     static func rotated(vertices: [Vertex], q: simd_quatf) -> [Vertex] {
